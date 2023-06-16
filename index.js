@@ -4,6 +4,8 @@ const path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 
+require("dotenv").config();
+
 const indexRouter = require("./routes/routes");
 
 const port = 2121;
@@ -16,9 +18,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use("/", indexRouter);
 const mongoose = require('mongoose');
+const mongo_pass = process.env.MONGO_PASS;
 
 async function main() {
-  await mongoose.connect('mongodb+srv://fabiocpb:mongocabral01@cluster0.g8pht.mongodb.net/predmaq?retryWrites=true&w=majority');
+  await mongoose.connect(`mongodb+srv://fabiocpb:${mongo_pass}@cluster0.g8pht.mongodb.net/predmaq?retryWrites=true&w=majority`);
 }
 
 main().catch(err => console.log(err));
